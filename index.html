@@ -5,72 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Hire Onboarding Guide</title>
     <style>
+        :root {
+            --bg-color: #1a1a1d;
+            --primary-text: #f5f5f5;
+            --accent-color: #c69c6d;
+            --card-bg: #2c2c34;
+            --border-color: #444;
+        }
+ 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #1a1a1d;
-            color: #f5f5f5;
+            background-color: var(--bg-color);
+            color: var(--primary-text);
             margin: 0;
             padding: 0;
             overflow-x: hidden;
         }
-
+ 
         .container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-
+ 
         .header {
             padding: 20px;
             text-align: center;
-            border-bottom: 1px solid #2c2c34;
-            margin-bottom: 20px;
         }
-
+ 
         .search-container {
             position: relative;
-            margin: 20px auto;
+            margin: 0 auto;
             width: 90%;
             max-width: 600px;
         }
-
+ 
         .search-input {
             width: 100%;
-            padding: 10px 15px;
-            border: 1px solid #444;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
-            background-color: #2c2c34;
-            color: #f5f5f5;
+            background-color: var(--card-bg);
+            color: var(--primary-text);
             font-size: 1em;
             box-sizing: border-box;
         }
-
+ 
         .main-content {
             flex-grow: 1;
             position: relative;
         }
-
+ 
         .main-menu-wrapper {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100%;
+            min-height: 70vh;
             padding: 20px;
             box-sizing: border-box;
-            transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
+            transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
         }
-
+ 
+        .home-title {
+            font-size: 3em;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+ 
         .main-menu {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            width: 90%;
+            width: 100%;
             max-width: 1200px;
         }
-
+ 
         .menu-item {
-            background-color: #2c2c34;
-            border: 2px solid #c69c6d;
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-color);
             border-radius: 10px;
             padding: 30px;
             text-align: center;
@@ -82,46 +97,48 @@
             align-items: center;
             justify-content: center;
         }
-
+ 
         .menu-item:hover {
             transform: scale(1.05);
             box-shadow: 0 0 20px rgba(198, 156, 109, 0.5);
         }
-
+ 
         .content-page {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #1a1a1d;
-            transform: scale(1.2);
+            background-color: var(--bg-color);
+            transform: scale(1.1);
             opacity: 0;
             overflow-y: auto;
             padding: 40px;
             box-sizing: border-box;
             visibility: hidden;
-            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transition: opacity 0.4s ease-in-out, visibility 0s 0.4s, transform 0.4s ease-in-out;
         }
-
+ 
         .content-page.active {
             transform: scale(1);
             opacity: 1;
             visibility: visible;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
         }
-
+ 
         .main-menu-wrapper.zoom-out {
-            transform: scale(0.8);
+            transform: scale(0.9);
             opacity: 0;
             pointer-events: none;
+            visibility: hidden;
         }
-
+ 
         .back-button {
             position: fixed;
             top: 20px;
             left: 20px;
-            background-color: #c69c6d;
-            color: #1a1a1d;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -129,73 +146,60 @@
             font-weight: bold;
             z-index: 100;
         }
-
+ 
         .content-page h1, .content-page h2, .content-page h3 {
-            color: #c69c6d;
-            border-bottom: 2px solid #c69c6d;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 10px;
         }
-
-        .content-page h2 {
-            margin-top: 30px;
-        }
-
-        .content-page h3 {
-            border-bottom: 1px solid #555;
-            color: #bda284;
-            margin-top: 20px;
-        }
-
-        .content-page ol, .content-page ul {
-            line-height: 1.6;
-        }
-
-        .content-page strong, .content-page b {
-            color: #e0ac69;
-        }
-
+ 
+        .content-page h2 { margin-top: 30px; }
+        .content-page h3 { border-bottom: 1px solid #555; color: #bda284; margin-top: 20px; }
+        .content-page ol, .content-page ul { line-height: 1.6; }
+        .content-page strong, .content-page b { color: #e0ac69; }
+ 
         .note {
-            background-color: #2c2c34;
-            border-left: 5px solid #c69c6d;
+            background-color: var(--card-bg);
+            border-left: 5px solid var(--accent-color);
             padding: 15px;
             margin: 15px 0;
             border-radius: 5px;
         }
-
+ 
         .tag {
             display: inline-block;
             padding: 3px 8px;
             border-radius: 15px;
             font-size: 0.8em;
             font-weight: bold;
-            color: #1a1a1d;
+            color: var(--bg-color);
             margin-left: 10px;
         }
-
+ 
         .important { background-color: #ff4d4d; }
         .very-important { background-color: #ff0000; color: white; }
         .situational { background-color: #4da6ff; }
         .forget { background-color: #cccccc; }
-
-        .home-title {
-            font-size: 3em;
-            color: #c69c6d;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-            margin-bottom: 40px;
+ 
+        .highlight {
+            background-color: yellow;
+            color: black;
         }
+ 
     </style>
 </head>
 <body>
+ 
     <div class="container">
         <div class="header">
             <div class="search-container">
-                <input type="text" id="search-input" class="search-input" onkeyup="searchContent()" placeholder="Search guide...">
+                <input type="text" id="search-input" class="search-input" placeholder="Search guide...">
             </div>
         </div>
         <div class="main-content">
             <div class="main-menu-wrapper">
+                <div class="home-title">New Hire Training</div>
                 <div class="main-menu">
-                    <div class="home-title">New Hire Training</div>
                     <div class="menu-item" data-target="amadeus">Amadeus</div>
                     <div class="menu-item" data-target="b4-check-in">B4 Check In</div>
                     <div class="menu-item" data-target="cisco-finesse">Cisco Finesse</div>
@@ -207,10 +211,11 @@
                     <div class="menu-item" data-target="synkros">Synkros</div>
                 </div>
             </div>
-
+ 
             <div id="amadeus" class="content-page">
                 <button class="back-button">Back</button>
                 <h1>Amadeus</h1>
+                <hr>
                 <h2>Service Orders (Synkros)</h2>
                 <h3>Knows How To Create A Service Order <span class="tag very-important">Very Important</span></h3>
                 <ol>
@@ -221,21 +226,21 @@
                     <li>Add remarks for quantities or specific details.</li>
                     <li>Click the top right arrow and keep pressing it until the order is submitted.</li>
                 </ol>
-
+ 
                 <h3>Knows how to defer a service order. <span class="tag forget">Forget</span></h3>
                 <ol>
                     <li>Follow the same process for creating an order.</li>
                     <li>Before submitting, click the button that looks like a clock next to the item.</li>
                     <li>Set the desired time and then finish submitting the order.</li>
                 </ol>
-
+ 
                 <h3>Knows How To Cancel An Order</h3>
                 <ol>
                     <li>Find the order on the service orders page.</li>
                     <li>Select the checkbox next to the order.</li>
                     <li>The "void" button should become active. If it's grayed out, call the Housekeeping Manager.</li>
                 </ol>
-
+ 
                 <h3>Knows how to Check on the Order Status Or History <span class="tag situational">Situational</span></h3>
                 <ol>
                     <li>On the Service Orders page, click the order number.</li>
@@ -244,7 +249,7 @@
                     <li>Adjust the date range using the filter option to see the order history for that room.</li>
                 </ol>
             </div>
-
+ 
             <div id="b4-check-in" class="content-page">
                 <button class="back-button">Back</button>
                 <h1>B4 Check In</h1>
@@ -266,7 +271,7 @@
                     <li>Then you can send the email. You can add more amount to the attempts but it doesn't matter.</li>
                     <li>Once guest pays the reservation balance goes higher.</li>
                 </ol>
-
+ 
                 <h2>Knows How To Send an Invoice For Multiple Reservations<span class="tag situational">Situational</span></h2>
                 <ol>
                     <li>Same as above</li>
@@ -274,7 +279,7 @@
                     <li>Then just enter the confirmation number for each guest and the amount.</li>
                 </ol>
             </div>
-
+ 
             <div id="cisco-finesse" class="content-page">
                 <button class="back-button">Back</button>
                 <h1>Cisco Finesse</h1>
@@ -284,7 +289,7 @@
                     <li>Drag it down onto the bookmarks bar.</li>
                     <li>Right click it to edit its name.</li>
                 </ol>
-
+ 
                 <h2>Knows the Difference NR / Not Ready Status<span class="tag important">Important</span></h2>
                 <ul>
                     <li><strong>Guest Followup</strong> for finishing up notes/etc with guest</li>
@@ -292,21 +297,21 @@
                     <li><strong>Lunch</strong> is for Lunch for 1hr</li>
                     <li>You should be ready for 7hr average.</li>
                 </ul>
-
+ 
                 <h2>Knows How To Check Different Queues.</h2>
                 <ol>
                     <li>Everyone is assigned their own queues.</li>
                     <li>If you click on <strong>team</strong> on cisco Finesse and then click on your name or someone elses, you can see thier queues.</li>
                     <li>Managers can switch this whenever.</li>
                 </ol>
-
+ 
                 <h2>Know how to check everyones call status.</h2>
                 <ol>
                     <li>On cisco Finesse. Click the <strong>team tab</strong> on the right.</li>
                     <li>Look at everyone. If they are yellow they are talking.</li>
                     <li>Red is not ready and green means they are waiting for a call.</li>
                 </ol>
-
+ 
                 <h2>Knows How To Transfer And Warm Transfer Calls<span class="tag very-important">Very Important</span></h2>
                 <ol>
                     <li>When you are in a call with someone. You will put them on hold.</li>
@@ -315,7 +320,7 @@
                     <li>You will then click on either the <strong>transfer button</strong> to instantly transfer them to that person without introduction. Or you can press <strong>Conference</strong> to do a warm transfer and introduce the person.</li>
                 </ol>
             </div>
-
+ 
             <div id="grub-hub-otf" class="content-page">
                 <button class="back-button">Back</button>
                 <h1>Grub Hub OTF</h1>
@@ -325,11 +330,11 @@
                     <li>Make sure they are entering their name the same way it is spelt on the resrvation on opera cloud</li>
                     <li>Make sure they choose <strong>OTF</strong> on Grub Hub.</li>
                 </ol>
-
+ 
                 <h2>Knows Who Qualifies for Inroom dining</h2>
                 <p>Only Conrad Suites and all Crockfords.</p>
             </div>
-
+ 
             <div id="luggage-assistance" class="content-page">
                 <button class="back-button">Back</button>
                 <h1>Luggage Assistance</h1>
@@ -349,7 +354,7 @@
                     <li>Tell them that.</li>
                 </ol>
             </div>
-
+ 
             <div id="nevotek" class="content-page">
                 <button class="back-button">Back</button>
                 <h1>Nevotek</h1>
@@ -361,304 +366,618 @@
                     <li>Select the room number</li>
                     <li>Then create call.</li>
                 </ol>
-
+ 
                 <h2>Knows how to delete wake up call</h2>
                 <p>Same as above but just delete</p>
-
+ 
                 <h2>Failed Wake Up Call / Wellness Check.</h2>
                 <ol>
                     <li>If you have to do a wellness check on guest. Call room a couple times, if no answer.</li>
                     <li>Call security to do a wellness check on guest room.</li>
                 </ol>
             </div>
-
+ 
             <div id="opera-cloud" class="content-page">
                 <button class="back-button">Back</button>
                 <h1>Opera Cloud</h1>
-
                 <h2>Initial Setup & Login</h2>
-                <h3>Bookmarked Opera Cloud Prod Link <span class="tag situational">Situational</span></h3>
+                 <h3>Bookmarked Opera Cloud Prod Link <span class="tag situational">Situational</span></h3>
+                 <ol>
+                     <li>Copy Link for website on the top bar</li>
+                     <li>Drag it down onto your bookmarks bar.</li>
+                     <li>Right Click to edit name.</li>
+                 </ol>
+ 
+                 <h3>Can Log In to Opera Cloud Prod</h3>
+                 <ol>
+                     <li>Log in to your account using OKTA</li>
+                     <li>Username: "firstName.lastName@rwlasvegas.com"</li>
+                     <li>Enter your Password</li>
+                     <li>OKTA verification</li>
+                     <li>When on Opera Cloud Click OKTA on the bottom.</li>
+                 </ol>
+ 
+                 <h3>Selecting Credit Card Terminal</h3>
+                 <ol>
+                     <li>This only prompts you the first time you use it or randomly each day.</li>
+                     <li>Click the <strong>GP</strong> tab.</li>
+                     <li>Then click the "<strong>DESK ##</strong>" that matches your computer. (Doesn't really matter as it's rarely used).</li>
+                 </ol>
+ 
+                 <hr>
+ 
+                 <h2>Reservations: Booking & Quoting</h2>
+                 <h3>Quoting Rates</h3>
+                 <ol>
+                     <li>When you book someone's room, you must inform the guest about 5 things in any order:</li>
+                     <ol>
+                         <li>Rate for each night.</li>
+                         <li>Resort Fees (included with the total or mentioned separately).</li>
+                         <li>The <strong>48-hour Cancellation Policy</strong>.</li>
+                         <li>The <strong>Incidental Hold of $150 per night</strong> (suites are different).</li>
+                         <li>The specific room type you booked for them.</li>
+                     </ol>
+                     <li>After quoting, add a <strong>note</strong> on the reservation documenting everything.
+                         <div class="note">Example: "K1PO Quoted: $79, $79 RF $55, RF $55 | Inc$150/night 48 CXL"</div>
+                     </li>
+                 </ol>
+ 
+                 <h3>Booking Reservation</h3>
+                 <ol>
+                     <li>Go to the <strong>Look To Book</strong> page.</li>
+                     <li>Enter the dates.</li>
+                     <li>Enter the number of people.</li>
+                     <li>Click <strong>Search</strong>.</li>
+                     <li>Ask the guest which tower they prefer and if they have a view preference.</li>
+                     <li>Click on the desired room type (do not click select yet). Scroll down to see the rates to quote.</li>
+                     <li>After quoting, click <strong>Select</strong>.</li>
+                     <li>Click the search button on the profile section.</li>
+                     <li>Search for the guest. If they don't exist, click <strong>Create Profile</strong> in the top right and enter their information.</li>
+                     <li>After the guest is selected, collect the credit card number and expiration date.</li>
+                     <li>Click <strong>Book Now</strong> on the bottom right.</li>
+                     <li>Collect the deposit amount - add a reference on the right for "1st Night Deposit".</li>
+                     <li>Click <strong>Go to Reservation</strong> on the bottom right.</li>
+                     <li>Add notes for the quote and any other relevant information.</li>
+                 </ol>
+ 
+                 <h3>Can Modify A Reservation</h3>
+                 <h4>Changing The Rates and Room Types</h4>
+                 <ol>
+                     <li>First, confirm you are able to change this information. <strong>NEVER CHANGE THIRD PARTY INFO (rate codes starting with "LL") WITHOUT THEIR PERMISSION</strong>, unless it's only the room type with no price change.</li>
+                     <li>Click on <strong>Daily Details</strong> on the bottom right.</li>
+                     <li>Here you can manually adjust the amount charged for each night. This is usually done if they were quoted a different rate.</li>
+                     <li>To the right, you can change the assigned room type and the charged room type. If you change the assigned room type, it will ask to automatically update the charged room type. Say yes if you want to charge them for the new one.</li>
+                     <li>Click <strong>Refresh</strong> in the top right after making changes.</li>
+                 </ol>
+                 <h4>Changing The Dates</h4>
+                 <ol>
+                     <li>Confirm you can change the dates (YYGEN1, DRACK, DBAR are usually okay). <strong>NEVER CHANGE THIRD PARTY DATES WITHOUT PERMISSION</strong>.</li>
+                     <li>Before doing anything, note the current rates from Stay Details or Daily Details in case they change.</li>
+                     <li>On the reservation, click the <strong>Edit</strong> option on the right middle of the screen.</li>
+                     <li>Scroll down to the stay dates and modify them.</li>
+                 </ol>
+ 
+                 <hr>
+ 
+                 <h2>Profiles & Guests</h2>
+                 <h3>Profile Search</h3>
+                 <ol>
+                     <li>Use this when you need to add an accompanying guest or create a new reservation.</li>
+                     <li>Search using any information you have.</li>
+                     <li>Try multiple search methods if the guest doesn't appear immediately.</li>
+                 </ol>
+ 
+                 <h3>Create Guest Profile</h3>
+                 <ol>
+                     <li>If you can't find the guest, click <strong>Create Guest Profile</strong> in the top right of the search screen.</li>
+                     <li>Enter all their information.</li>
+                     <li>Click <strong>Save</strong> (you may need to click it multiple times).</li>
+                 </ol>
+ 
+                 <h3>Can add a Share/Accompany guest <span class="tag important">Important</span></h3>
+                 <ol>
+                     <li>Verify the last 4 digits of the card on file using the payment instructions.</li>
+                     <li>On the reservation, click on <strong>Accompany Guest/Profile</strong> on the bottom right.</li>
+                     <li>Click <strong>New</strong> on the bottom row (you might need to click Edit on the top right first).</li>
+                     <li>Search for their profile or create a new one (just their name is usually sufficient).</li>
+                     <li>Save multiple times to finish.</li>
+                     <li>Go to <strong>Notes</strong>.</li>
+                     <li>Create a new note with the title "gen", then change the note type from "general note" to "SHARE".</li>
+                     <li>Type the new guest's full name in the text box.</li>
+                     <li>Save when done.</li>
+                 </ol>
+ 
+                 <hr>
+ 
+                 <h2>Payments & Deposits</h2>
+                 <h3>Deposit Codes</h3>
+                 <ul>
+                     <li><strong>WV</strong> = Waive Deposit. Used for comped rooms or when using B4 Check-In for the deposit.</li>
+                     <li><strong>CP</strong> = Chip & Pin. A placeholder or for physical card use with the card readers.</li>
+                     <li><strong>DD</strong> = Standard payment option.</li>
+                     <li><strong>CASH</strong> = A placeholder, also can be used for comped rooms.</li>
+                 </ul>
+ 
+                 <h3>Collecting Deposits</h3>
+                 <ol>
+                     <li>Go to a reservation.</li>
+                     <li>Click <strong>Deposit/Cancellation</strong>.</li>
+                     <li>Find the deposit amount near the middle of the page and click the vertical ellipses (3 dots) next to it.</li>
+                     <li>Select <strong>Post Deposit</strong>.</li>
+                     <li>Add the reference "1st Night Deposit" and click the button on the bottom right to process.</li>
+                     <li>If it fails, an error message will appear. If successful, you'll have an option to email a receipt.</li>
+                 </ol>
+                 <div class="note"><strong>EXTRA:</strong> You can tell if a deposit has been paid if the reservation balance is a negative amount, not "0".</div>
+ 
+                 <h3>Knows how to process cancellation and refund <span class="tag important">Important</span></h3>
+                 <h4>Cancellation</h4>
+                 <ol>
+                     <li>Verify that the reservation is cancellable. Standard rate codes like DRACK, DBAR, and YYGEN1 are usually fine. Most "D" codes are safe. Ask if unsure.</li>
+                     <li>On the reservation, click <strong>"I Want To"</strong> in the top right.</li>
+                     <li>Click <strong>Cancel Reservation</strong> in the first column.</li>
+                     <li>Choose a reason (e.g., CHANGE, DUPE).</li>
+                     <li>Write a reason in the text box.</li>
+                     <li>Click <strong>Cancel</strong>.</li>
+                     <li>Post a penalty if the cancellation is within 48 hours and the situation warrants it.</li>
+                 </ol>
+                 <h4>Refund</h4>
+                 <ol>
+                     <li>After cancellation, click on <strong>Deposit/Cancellation</strong>.</li>
+                     <li>Click the plus sign next to the payment to expand it.</li>
+                     <li>Click the Big Blue Ellipses.</li>
+                     <li>Click <strong>Reverse</strong>.</li>
+                     <li>Type in a reason like "Refund | 1st Night Deposit".</li>
+                     <li>Click to process the refund.</li>
+                     <li>Once it goes through, send the receipt to the guest.</li>
+                 </ol>
+ 
+                 <hr>
+ 
+                 <h2>Billing & Folios <span class="tag very-important">Very Important</span></h2>
+                 <h3>Knows The Billing Windows</h3>
+                 <ol>
+                     <li>This is crucial for most calls. Master it.</li>
+                     <li>On the reservation, click <strong>"I Want To"</strong>, then <strong>Billing</strong>.</li>
+                     <li>Click <strong>"Show More"</strong> on the right to see everything.</li>
+                     <li><strong>Billing Windows Breakdown:</strong>
+                         <ul>
+                             <li><strong>Window 1:</strong> Always what the guest has to pay.</li>
+                             <li><strong>Window 2:</strong> Usually Third Party Payment, or an extra card/company card.</li>
+                             <li><strong>Windows 3, 4, 6, 7, 8:</strong> Trash windows. Ensure they are at 0.</li>
+                             <li><strong>Window 5:</strong> Only for Guest Disputes (e.g., Minibar over $100, other disputed charges).</li>
+                         </ul>
+                     </li>
+                     <li><strong>Comping Windows Breakdown:</strong>
+                         <ul>
+                             <li><strong>Window 101:</strong> YY Room comps.</li>
+                             <li><strong>Window 102:</strong> YY Food comps.</li>
+                             <li><strong>Windows 103, 104, 105:</strong> Ignore/Don't Use.</li>
+                             <li><strong>Window 106 & 107:</strong> General use for comping (usually food).</li>
+                             <li><strong>Window 108:</strong> Almost always reserved for Hilton Honors MyWay Credits.</li>
+                         </ul>
+                     </li>
+                     <li>You can move items freely between windows. Ensure everything is in the correct window before clicking <strong>Post Payment</strong>.</li>
+                     <li>A negative amount in a window indicates a refund; a positive amount indicates a charge.</li>
+                 </ol>
+                 <h4>For Checked Out Guests:</h4>
+                 <ol>
+                     <li>You must enable post-stay privileges.</li>
+                     <li>Click on <strong>Payment Instructions</strong>.</li>
+                     <li>Click <strong>new/edit payment instructions</strong>.</li>
+                     <li>Check the box for "post stay charging".</li>
+                     <li>Click <strong>Save</strong>. You can now manage the folio.</li>
+                 </ol>
+ 
+                 <h3>Posting Charges</h3>
+                 <ol>
+                     <li>Primarily used for Late Checkouts.</li>
+                     <li>In the billing window, click <strong>"post charge"</strong> at the bottom.</li>
+                     <li>Type in "Late Check Out" and select the correct time/option.</li>
+                     <li>Enter the amount according to the on-shift guide.</li>
+                     <li>Click <strong>Post Charge</strong>.</li>
+                 </ol>
+ 
+                 <h3>Adjusting Vs. Comping Charges <span class="tag important">Important</span></h3>
+                 <h4>When To Adjust:</h4>
+                 <p>Use "Adjust" when a charge should have never existed in the first place.</p>
+                 <ul>
+                     <li>Mistaken valet charge.</li>
+                     <li>HH Diamond internet charges.</li>
+                     <li>Incorrect parking fees.</li>
+                 </ul>
+                 <h4>When To Comp:</h4>
+                 <p>Use "Comp" for everything else that is not a mistaken charge.</p>
+                 <ul>
+                     <li>Food and beverage (some restaurant charges and tips may not work).</li>
+                     <li>Resort Fees.</li>
+                     <li>Other goodwill gestures.</li>
+                 </ul>
+ 
+                 <h3>Transfer Posting (mainly Minibar) <span class="tag very-important">Very Important</span></h3>
+                 <ol>
+                     <li>For disputed minibar charges <strong>under $100</strong>.</li>
+                     <li>Go to billing and enable <strong>post stay charging</strong> if the guest is checked out.</li>
+                     <li>Sort by "description" to group minibar charges.</li>
+                     <li>Select the disputed minibar charges. You can move them to a trash window (3, 4, etc.) to confirm the total is under $100.</li>
+                     <li>With the charges highlighted, click the blue ellipses at the top of the billing window.</li>
+                     <li>Click on <strong>Transfer</strong>.</li>
+                     <li>Click the search glass for the room number.</li>
+                     <li>Remove the date, type room # "<strong>9046</strong>", and search.</li>
+                     <li>Select the Minibar room and click <strong>Transfer</strong>.</li>
+                     <li>To issue a refund, ensure Window 1 has the correct negative balance and click <strong>Post Payment</strong>.</li>
+                     <li>Send the updated folio and receipt to the guest.</li>
+                 </ol>
+ 
+                 <h3>Minibar Dispute <span class="tag important">Important</span></h3>
+                 <ol>
+                     <li>For disputed minibar charges <strong>over $100</strong>.</li>
+                     <li>Go to billing and enable post-stay privileges if needed.</li>
+                     <li>Sort by "description" and select all disputed minibar charges.</li>
+                     <li>Move them to <strong>Window 5</strong>.</li>
+                     <li>Send an email to both <strong>fdcashier</strong> and <strong>minibardisuptes</strong> emails.</li>
+                     <li>In the email, explain the dispute, include the confirmation number, and attach a picture showing their room number and stay dates.</li>
+                     <li>Leave a note on the reservation explaining that you moved the charges to Window 5 and sent the email.</li>
+                     <li>Check your email for updates and send the final folio to the guest when resolved.</li>
+                 </ol>
+ 
+                 <h3>AR Disputes</h3>
+                 <ol>
+                     <li>For when a guest disputes a charge from a bar, pool, or other outlet.</li>
+                     <li>Enable post-stay privileges and open the billing the window.</li>
+                     <li>Move the disputed charges to <strong>Window 5</strong>.</li>
+                     <li>Go to <strong>Routing Instructions</strong>.</li>
+                     <li>Click <strong>New</strong>. Change the routing option to "folio" and select Window 5.</li>
+                     <li>Click on <strong>Profile</strong>. Change the search type to "View All".</li>
+                     <li>Search for AR Number "<strong>%DISPUTES</strong>".</li>
+                     <li>Select the option that matches the guest's tower and click <strong>Select</strong>.</li>
+                     <li>Save the routing and add notes about your actions.</li>
+                 </ol>
+ 
+                 <h3>Routing <span class="tag very-important">Very Important</span></h3>
+                 <p>Used to comp items, set up AR disputes, and handle group/wholesale room and tax (RT) payments.</p>
+                 <h4>General Set Up</h4>
+                 <ol>
+                     <li>Go to <strong>Routing Instructions</strong>.</li>
+                     <li>Click <strong>New</strong> to create one. To view an existing one, click the ellipses and select edit/view.</li>
+                     <li>For comps, select the <strong>Comps</strong> option.</li>
+                     <li>Search for an authorizer to approve the comp (new hires need management permission and their number).</li>
+                     <li>Select the comp window (usually <strong>106</strong> or <strong>107</strong>).</li>
+                     <li>Click <strong>Profile</strong> and enter the appropriate reason for the comp.</li>
+                     <li>Select the charge code(s) on the left to be covered (e.g., "ALL managed Food & Beverage").</li>
+                     <li><strong>MOST IMPORTANTLY:</strong> Enter a maximum amount for the routing at the bottom.</li>
+                     <li>Save and add detailed notes.</li>
+                 </ol>
+                 <h4>Hilton My Way</h4>
+                 <ol>
+                     <li>Same process as above.</li>
+                     <li>Authorizer: <strong>depthhmyway</strong></li>
+                     <li>Window: <strong>108</strong></li>
+                     <li>Profile: Last Name = comps | First Name = ng</li>
+                     <li>Coverage: Select <strong>HHMYWAY</strong> and move it to the right.</li>
+                     <li>Amount: <strong>$30 per night</strong> for Hilton Guests, <strong>$50 per night</strong> for Conrad Guests.</li>
+                 </ol>
+ 
+                 <h3>CC Authorizations (Credit Card History) <span class="tag very-important">Most Important</span></h3>
+                 <ol>
+                     <li>This is the most critical function for billing questions.</li>
+                     <li>Go to <strong>Payment Instructions</strong> (or from Billing: "I Want To" -> cc authorizations).</li>
+                     <li>Click the blue ellipses on the top right, then click <strong>Credit Card History</strong>.</li>
+                     <li>This screen shows every authorization, payment, refund, and failed transaction.</li>
+                     <div class="note">
+                         <strong>Authorization vs. Charge:</strong> An <strong>authorization</strong> is a hold on funds. We place a large authorization at check-in for the room, tax, and incidental hold. A <strong>settlement/charge</strong> is the final amount we take from that hold. The remaining hold is released.
+                         <br><em>Release times: 24-48 hours for credit cards, 3-10 business days for debit cards, 3-7 for AMEX.</em>
+                     </div>
+                     <li>You can filter transactions at the top. It's best to enable them all.</li>
+                     <li>The right column identifies the transaction type ("authorization", "settlement", etc.).</li>
+                     <li>Use this to understand which card was used and what amounts the guest is seeing on their bank statement.</li>
+                 </ol>
+ 
+                 <h3>Can Process Check Out <span class="tag very-important">Very Important</span></h3>
+                 <ol>
+                     <li>On the reservation, click <strong>"I Want To"</strong> -> <strong>Check Out</strong> (or do it from the Billing screen).</li>
+                     <li>On the new layout, your goal is to make every window balance <strong>zero</strong>.</li>
+                     <li>Go through each window and click <strong>"Settle Folio"</strong>.</li>
+                     <li>For comp windows, you must select a payment method. Choose <strong>Comp Settlement</strong> from the top-right dropdown, then click "Settle Folio".</li>
+                     <li>Once all windows are zero, you can check out the guest.</li>
+                     <li>Send the guest their final folio and, if you wish, the final payment receipt.</li>
+                 </ol>
+ 
+                 <h3>Send A Copy Of Folio <span class="tag very-important">Most Important</span></h3>
+                 <ol>
+                     <li>This is a very common and easy request.</li>
+                     <li>Go to <strong>"I Want To"</strong> -> <strong>Billing</strong>.</li>
+                     <li>Above the charges in Window 1, click the blue ellipses.</li>
+                     <li>Click <strong>Information Folio</strong>.</li>
+                     <li>Click <strong>Send by email</strong>.</li>
+                     <li>You can enter a new email address if needed before sending.</li>
+                 </ol>
+ 
+                 <hr>
+ 
+                 <h2>Reservation Details & Notes</h2>
+                 <h3>Notes <span class="tag important">Important</span></h3>
+                 <ol>
+                     <li>On a reservation, click <strong>Notes</strong>.</li>
+                     <li>Click <strong>New</strong> to create one or the ellipses to edit an existing one.</li>
+                     <li>Set the title to "gen", then press Tab twice or click the text box to type.</li>
+                     <li>Save when done.</li>
+                 </ol>
+                 <div class="note"><strong>EXTRA:</strong> Notes are for very detailed descriptions or full stories.</div>
+ 
+                 <h3>Alerts <span class="tag important">Important</span></h3>
+                 <ol>
+                     <li>On a reservation, click <strong>Alerts</strong>.</li>
+                     <li>Click <strong>New</strong> to create one or the ellipses to edit.</li>
+                     <li>Common titles: MISC, B2B (for back-to-backs), Pre (for Pre-Registers).</li>
+                     <li>Double-tap Tab or click the text box to start typing.</li>
+                     <li>Save when done.</li>
+                 </ol>
+                 <div class="note"><strong>EXTRA:</strong> Alerts are for quick, important messages to the next agent.</div>
+ 
+                 <h3>Traces <span class="tag situational">Situational</span></h3>
+                 <ol>
+                     <li>On a reservation, click <strong>Traces</strong>.</li>
+                     <li>Used for tasks that need to be addressed on a future date.</li>
+                     <li>Titles depend on the department you want to contact:
+                         <ul>
+                             <li><strong>FDK:</strong> Front Desk (e.g., B2B)</li>
+                             <li><strong>HSK:</strong> Housekeeping (e.g., Roll Away Bed)</li>
+                             <li><strong>GPD:</strong> Group Reservations</li>
+                         </ul>
+                     </li>
+                     <li>Set the time to <strong>5 AM</strong> (typing "5" and tabbing auto-fills this).</li>
+                     <li>Type your message and save.</li>
+                 </ol>
+ 
+                 <h3>Preferences <span class="tag important">Important</span></h3>
+                 <ol>
+                     <li>On a reservation, click <strong>Preference</strong> on the bottom right.</li>
+                     <li>Search for what you want (e.g., "12PM" for late checkout, "B2B" for back-to-back).</li>
+                     <li>Click it to highlight it in blue.</li>
+                     <li>Click the right-pointing arrow to add it.</li>
+                     <li>Click <strong>Save</strong>.</li>
+                 </ol>
+ 
+                 <h3>Changes Log</h3>
+                 <ol>
+                     <li>Needed to verify information or see the history of a reservation.</li>
+                     <li>Click <strong>"I Want To"</strong> -> <strong>Changes Log</strong>.</li>
+                     <li>Look through all changes. Useful for seeing the original booking details or if an issue has already been addressed.</li>
+                     <li>Scroll down and click "Load More" to see the full history.</li>
+                 </ol>
+ 
+                 <h3>Stay Details <span class="tag very-important">Very Important</span></h3>
+                 <ol>
+                     <li>This screen provides a comprehensive overview of the reservation.</li>
+                     <li>On the reservation, click <strong>Stay Details</strong> on the bottom left.</li>
+                     <li>To see the total cost for the guest, click on the rate number or stay total under "Guest Pay".</li>
+                     <li>To understand a rate code, click on the rate letters. This shows details, including package inclusions.</li>
+                     <li>The third-party source (if any) is listed on the right side.</li>
+                 </ol>
+ 
+                 <hr>
+ 
+                 <h2>Special Scenarios</h2>
+                 <h3>B2B (Back-to-Back) <span class="tag situational">Situational</span></h3>
+                 <p>For guests with consecutive reservations. Apply the following steps to <strong>both</strong> reservations (except the trace).</p>
+                 <h4>Future Stay (Proactive Setup)</h4>
+                 <ol>
+                     <li>Add an <strong>Alert</strong> with the title "B2B" and include the other confirmation number.</li>
+                     <li>Add a "gen" <strong>Note</strong> describing the B2B situation.</li>
+                     <li>On the <strong>second</strong> reservation, set up a <strong>Trace</strong> for "FDK" at 5 AM, mentioning the other confirmation number and the B2B purpose.</li>
+                     <li>Set the B2B <strong>Preference</strong>.</li>
+                 </ol>
+                 <h4>Transition Day (Reactive Setup)</h4>
+                 <ol>
+                     <li>This is for when a B2B wasn't set up in advance.</li>
+                     <li>Assign the room for the reservation checking in today.</li>
+                     <li>Go to <strong>"I Want To"</strong> -> <strong>Assign Room</strong>.</li>
+                     <li>Search for their current room number, making sure the <strong>"Departures"</strong> box is checked. You may also need to check "Dirty".</li>
+                     <li>After assigning the same room to the new reservation, add Notes and an Alert for B2B. Make sure to click the <strong>"Do Not Move"</strong> box.</li>
+                     <li>Inform the guest they need to check in and get new keys at the front desk.</li>
+                 </ol>
+ 
+                 <h3>Room Assigning/Moving</h3>
+                 <ol>
+                     <li>Click <strong>"I Want To"</strong> -> <strong>Assign Room</strong>.</li>
+                     <li>Search for the room number. Be mindful of search parameters if nothing shows up.</li>
+                     <li>For B2B, ensure "Departing Rooms" is selected.</li>
+                     <li>For connecting rooms, ensure they are the same room type/view. Use the "Connecting Rooms" option or contact Room Coordinators.</li>
+                 </ol>
+ 
+                 <h3>Pre-Register for Late Arrivals <span class="tag situational">Situational</span></h3>
+                 <ol>
+                     <li>Ask the guest for their estimated arrival time.</li>
+                 </ol>
+                 <h4>Checking In Today</h4>
+                 <ol>
+                     <li>Set the arrival time via the <strong>Edit</strong> button on the reservation.</li>
+                     <li><strong>For arrivals around or after 12 AM:</strong>
+                         <ul>
+                             <li>Assign a room. If none are available, email room coordinators and hotel management.</li>
+                             <li>Create a Note describing the situation.</li>
+                             <li>Create an Alert with the title "PRE".</li>
+                             <li>Choose the "Pre" Preference.</li>
+                         </ul>
+                     </li>
+                     <li><strong>For arrivals before 11 PM:</strong>
+                         <ul>
+                             <li>Assign a room. Email coordinators/management if none are available.</li>
+                             <li>Create a Note.</li>
+                             <li>Create a "MISC" Alert saying "Late Arrival".</li>
+                             <li>Choose the "Late Arrival" Preference.</li>
+                         </ul>
+                     </li>
+                 </ol>
+                 <h4>Future Date Arrival</h4>
+                 <ol>
+                     <li>Same process as above, but do not assign a room or email anyone.</li>
+                     <li>Instead, set up a <strong>Trace</strong> for "FDK" at 5 AM, noting the guest's late arrival time.</li>
+                 </ol>
+ 
+                 <h3>Packages/Promos <span class="tag very-important">Very Important</span></h3>
+                 <ol>
+                     <li>To see if a reservation has a package, go to <strong>Stay Details</strong> and click the rate code to read the description. Or, click <strong>Packages</strong> on the bottom left (resort fee counts as one).</li>
+                 </ol>
+                 <h4>Questions About Food Packages</h4>
+                 <ol>
+                     <li>To check package usage, click <strong>Packages</strong> -> <strong>Daily View</strong> -> <strong>Breakout</strong>.</li>
+                     <li>Each day will show the allotted credit and the posted amount (e.g., "PACKAGE---75.00---75.00").</li>
+                     <li>If the posted amount on the right equals the allotted amount on the left, the credit was fully used for that day. If it's less, that's how much they used.</li>
+                     <li>You must manually add up the daily usage to find the remaining balance.</li>
+                 </ol>
+                 <h5>If The Guest Has Unused Credits:</h5>
+                 <ol>
+                     <li>Comp the guest for the unused amount in the billing window. You may need to split charges to get the exact amount.</li>
+                     <li>Move that amount to a comp window (106, 107).</li>
+                     <li>Use the appropriate authorizer (from stay details), set the profile to Last Name = salesandservices | First Name = fdk.</li>
+                     <li>Refund the guest and send an updated folio.</li>
+                 </ol>
+ 
+                 <h3>Fixed Charge</h3>
+                 <ol>
+                     <li>This is for items requested by the guest that have a cost, like a rollaway bed or extra fridge.</li>
+                     <li>Select the item (e.g., rollaway bed) and add the charge (e.g., $50).</li>
+                     <li>Add notes confirming you informed the guest of the daily price.</li>
+                 </ol>
+            </div>
+ 
+            <div id="red-chat" class="content-page">
+                <button class="back-button">Back</button>
+                <h1>Red Chat</h1>
+                <h2>Knows How To Access Red Chat<span class="tag important">Important</span></h2>
                 <ol>
-                    <li>Copy Link for website on the top bar</li>
-                    <li>Drag it down onto your bookmarks bar.</li>
-                    <li>Right Click to edit name.</li>
+                    <li>On Cisco Finesse, click the <strong>red chat</strong> option.</li>
+                    <li>Click <strong>Proceed</strong> once the tab loads.</li>
+                    <li>Click the three bars in the top right once the next page loads.</li>
+                    <li>Click <strong>Agent</strong> in the top right.</li>
+                    <li>Click your name in the top right and set your status to <strong>Ready</strong>.</li>
                 </ol>
-
-                <h3>Can Log In to Opera Cloud Prod</h3>
+ 
+                <h2>Has Red Chat Responses Saved.</h2>
                 <ol>
-                    <li>Log in to your account using OKTA</li>
-                    <li>Username: "firstName.lastName@rwlasvegas.com"</li>
-                    <li>Enter your Password</li>
-                    <li>OKTA verification</li>
-                    <li>When on Opera Cloud Click OKTA on the bottom.</li>
+                    <li>Once you are ready, click the <strong>My Responses</strong> option on the top left.</li>
+                    <li>Click <strong>New/Add Responses</strong>.</li>
+                    <li>Type in your canned response (e.g., an intro).</li>
+                    <li>Click <strong>Save</strong>.</li>
+                    <li>Now you can click it to quickly insert text into the chat.</li>
                 </ol>
-
-                <h3>Selecting Credit Card Terminal</h3>
+ 
+                <h2>Knows How To Access Information Inbox</h2>
                 <ol>
-                    <li>This only prompts you the first time you use it or randomly each day.</li>
-                    <li>Click the <strong>GP</strong> tab.</li>
-                    <li>Then click the "<strong>DESK ##</strong>" that matches your computer. (Doesn't really matter as it's rarely used).</li>
+                    <li>To access the Information Inbox, you must use a different browser (Chrome, Edge, Firefox) or an incognito window to avoid logging out of your own account.</li>
+                    <li>Go to <strong>outlook.com</strong>.</li>
+                    <li>Username/email: <strong>information@rwlv.onmicrosoft.com</strong></li>
+                    <li>Password (as of July 10, 2025): <strong>dsafdjlak</strong></li>
+                    <li>Sign in. When you start working on an email, right-click it to set the category to your name. Move it to "Completed" when you are finished.</li>
                 </ol>
-
-                <hr>
-
-                <h2>Reservations: Booking & Quoting</h2>
-                <h3>Quoting Rates</h3>
+ 
+                <h2>Knows How To Respond To Chats</h2>
                 <ol>
-                    <li>When you book someone's room, you must inform the guest about 5 things in any order:</li>
-                    <ol>
-                        <li>Rate for each night.</li>
-                        <li>Resort Fees (included with the total or mentioned separately).</li>
-                        <li>The <strong>48-hour Cancellation Policy</strong>.</li>
-                        <li>The <strong>Incidental Hold of $150 per night</strong> (suites are different).</li>
-                        <li>The specific room type you booked for them.</li>
-                    </ol>
-                    <li>After quoting, add a <strong>note</strong> on the reservation documenting everything.
-                        <div class="note">Example: "K1PO Quoted: $79, $79 RF $55, RF $55 | Inc$150/night 48 CXL"</div>
-                    </li>
+                    <li>When a chat appears in the "pending" section on the bottom right, someone is waiting.</li>
+                    <li>Click the chat, then click <strong>"pick up"</strong>.</li>
                 </ol>
-
-                <h3>Booking Reservation</h3>
+                <div class="note"><strong>EXTRA:</strong> The pinging notifications on the side are potential escalating chats. You can generally ignore these unless they escalate to you directly.</div>
+            </div>
+ 
+            <div id="synkros" class="content-page">
+                <button class="back-button">Back</button>
+                <h1>Synkros</h1>
+                <h2>Can Search for Patron's Number<span class="tag important">Important</span></h2>
                 <ol>
-                    <li>Go to the <strong>Look To Book</strong> page.</li>
-                    <li>Enter the dates.</li>
-                    <li>Enter the number of people.</li>
-                    <li>Click <strong>Search</strong>.</li>
-                    <li>Ask the guest which tower they prefer and if they have a view preference.</li>
-                    <li>Click on the desired room type (do not click select yet). Scroll down to see the rates to quote.</li>
-                    <li>After quoting, click <strong>Select</strong>.</li>
-                    <li>Click the search button on the profile section.</li>
-                    <li>Search for the guest. If they don't exist, click <strong>Create Profile</strong> in the top right and enter their information.</li>
-                    <li>After the guest is selected, collect the credit card number and expiration date.</li>
-                    <li>Click <strong>Book Now</strong> on the bottom right.</li>
-                    <li>Collect the deposit amount - add a reference on the right for "1st Night Deposit".</li>
-                    <li>Click <strong>Go to Reservation</strong> on the bottom right.</li>
-                    <li>Add notes for the quote and any other relevant information.</li>
+                    <li>Open the Synkros application from the desktop.</li>
+                    <li>Once loaded, click the top right, then click on <strong>"GR Contact"</strong>.</li>
+                    <li>Click the <strong>Find</strong> tab in the middle top.</li>
+                    <li>Enter their Genting Rewards number. If they don't have it, you can use their first name, last name, and date of birth to find it.</li>
                 </ol>
-
-                <h3>Can Modify A Reservation</h3>
-                <h4>Changing The Rates and Room Types</h4>
+ 
+                <h2>Knows How To Create A GR Account</h2>
                 <ol>
-                    <li>First, confirm you are able to change this information. <strong>NEVER CHANGE THIRD PARTY INFO (rate codes starting with "LL") WITHOUT THEIR PERMISSION</strong>, unless it's only the room type with no price change.</li>
-                    <li>Click on <strong>Daily Details</strong> on the bottom right.</li>
-                    <li>Here you can manually adjust the amount charged for each night. This is usually done if they were quoted a different rate.</li>
-                    <li>To the right, you can change the assigned room type and the charged room type. If you change the assigned room type, it will ask to automatically update the charged room type. Say yes if you want to charge them for the new one.</li>
-                    <li>Click <strong>Refresh</strong> in the top right after making changes.</li>
+                    <li>Open Synkros.</li>
+                    <li>Click the top-left red icon.</li>
+                    <li>Click <strong>GR Contact</strong>.</li>
+                    <li>Enter their name on the first tab.</li>
+                    <li>Go to the "Date" tab, enter their birthday, and select "Birthdate" as the date option.</li>
+                    <li>Go to the "Contact" tab and add their phone and email.</li>
+                    <li>Click <strong>Save</strong> in the top left.</li>
+                    <li>Click <strong>Insert New</strong>. The profile will be created.</li>
                 </ol>
-                <h4>Changing The Dates</h4>
+ 
+                <h2>Knows how to search for vouchers / F&B Credit</h2>
                 <ol>
-                    <li>Confirm you can change the dates (YYGEN1, DRACK, DBAR are usually okay). <strong>NEVER CHANGE THIRD PARTY DATES WITHOUT PERMISSION</strong>.</li>
-                    <li>Before doing anything, note the current rates from Stay Details or Daily Details in case they change.</li>
-                    <li>On the reservation, click the <strong>Edit</strong> option on the right middle of the screen.</li>
-                    <li>Scroll down to the stay dates and modify them.</li>
+                    <li>With a profile selected, click the top right.</li>
+                    <li>Click on <strong>Offers</strong> at the top.</li>
+                    <li>This will display all available offers for the guest.</li>
+                    <li>To see room offers, you need to transfer the call to Resort Marketing at extension <strong>6106</strong>.</li>
                 </ol>
-
-                <hr>
-
-                <h2>Profiles & Guests</h2>
-                <h3>Profile Search</h3>
-                <ol>
-                    <li>Use this when you need to add an accompanying guest or create a new reservation.</li>
-                    <li>Search using any information you have.</li>
-                    <li>Try multiple search methods if the guest doesn't appear immediately.</li>
-                </ol>
-
-                <h3>Create Guest Profile</h3>
-                <ol>
-                    <li>If you can't find the guest, click <strong>Create Guest Profile</strong> in the top right of the search screen.</li>
-                    <li>Enter all their information.</li>
-                    <li>Click <strong>Save</strong> (you may need to click it multiple times).</li>
-                </ol>
-
-                <h3>Can add a Share/Accompany guest <span class="tag important">Important</span></h3>
-                <ol>
-                    <li>Verify the last 4 digits of the card on file using the payment instructions.</li>
-                    <li>On the reservation, click on <strong>Accompany Guest/Profile</strong> on the bottom right.</li>
-                    <li>Click <strong>New</strong> on the bottom row (you might need to click Edit on the top right first).</li>
-                    <li>Search for their profile or create a new one (just their name is usually sufficient).</li>
-                    <li>Save multiple times to finish.</li>
-                    <li>Go to <strong>Notes</strong>.</li>
-                    <li>Create a new note with the title "gen", then change the note type from "general note" to "SHARE".</li>
-                    <li>Type the new guest's full name in the text box.</li>
-                    <li>Save when done.</li>
-                </ol>
-
-                <hr>
-
-                <h2>Payments & Deposits</h2>
-                <h3>Deposit Codes</h3>
-                <ul>
-                    <li><strong>WV</strong> = Waive Deposit. Used for comped rooms or when using B4 Check-In for the deposit.</li>
-                    <li><strong>CP</strong> = Chip & Pin. A placeholder or for physical card use with the card readers.</li>
-                    <li><strong>DD</strong> = Standard payment option.</li>
-                    <li><strong>CASH</strong> = A placeholder, also can be used for comped rooms.</li>
-                </ul>
-
-                <h3>Collecting Deposits</h3>
-                <ol>
-                    <li>Go to a reservation.</li>
-                    <li>Click <strong>Deposit/Cancellation</strong>.</li>
-                    <li>Find the deposit amount near the middle of the page and click the vertical ellipses (3 dots) next to it.</li>
-                    <li>Select <strong>Post Deposit</strong>.</li>
-                    <li>Add the reference "1st Night Deposit" and click the button on the bottom right to process.</li>
-                    <li>If it fails, an error message will appear. If successful, you'll have an option to email a receipt.</li>
-                </ol>
-                <div class="note"><strong>EXTRA:</strong> You can tell if a deposit has been paid if the reservation balance is a negative amount, not "0".</div>
-
-                <h3>Knows how to process cancellation and refund <span class="tag important">Important</span></h3>
-                <h4>Cancellation</h4>
-                <ol>
-                    <li>Verify that the reservation is cancellable. Standard rate codes like DRACK, DBAR, and YYGEN1 are usually fine. Most "D" codes are safe. Ask if unsure.</li>
-                    <li>On the reservation, click <strong>"I Want To"</strong> in the top right.</li>
-                    <li>Click <strong>Cancel Reservation</strong> in the first column.</li>
-                    <li>Choose a reason (e.g., CHANGE, DUPE).</li>
-                    <li>Write a reason in the text box.</li>
-                    <li>Click <strong>Cancel</strong>.</li>
-                    <li>Post a penalty if the cancellation is within 48 hours and the situation warrants it.</li>
-                </ol>
-                <h4>Refund</h4>
-                <ol>
-                    <li>After cancellation, click on <strong>Deposit/Cancellation</strong>.</li>
-                    <li>Click the plus sign next to the payment to expand it.</li>
-                    <li>Click the Big Blue Ellipses.</li>
-                    <li>Click <strong>Reverse</strong>.</li>
-                    <li>Type in a reason like "Refund | 1st Night Deposit".</li>
-                    <li>Click to process the refund.</li>
-                    <li>Once it goes through, send the receipt to the guest.</li>
-                </ol>
-
-                <hr>
-
-                <h2>Billing & Folios <span class="tag very-important">Very Important</span></h2>
-                <h3>Knows The Billing Windows</h3>
-                <ol>
-                    <li>This is crucial for most calls. Master it.</li>
-                    <li>On the reservation, click <strong>"I Want To"</strong>, then <strong>Billing</strong>.</li>
-                    <li>Click <strong>"Show More"</strong> on the right to see everything.</li>
-                    <li><strong>Billing Windows Breakdown:</strong>
-                        <ul>
-                            <li><strong>Window 1:</strong> Always what the guest has to pay.</li>
-                            <li><strong>Window 2:</strong> Usually Third Party Payment, or an extra card/company card.</li>
-                            <li><strong>Windows 3, 4, 6, 7, 8:</strong> Trash windows. Ensure they are at 0.</li>
-                            <li><strong>Window 5:</strong> Only for Guest Disputes (e.g., Minibar over $100, other disputed charges).</li>
-                        </ul>
-                    </li>
-                    <li><strong>Comping Windows Breakdown:</strong>
-                        <ul>
-                            <li><strong>Window 101:</strong> YY Room comps.</li>
-                            <li><strong>Window 102:</strong> YY Food comps.</li>
-                            <li><strong>Windows 103, 104, 105:</strong> Ignore/Don't Use.</li>
-                            <li><strong>Window 106 & 107:</strong> General use for comping (usually food).</li>
-                            <li><strong>Window 108:</strong> Almost always reserved for Hilton Honors MyWay Credits.</li>
-                        </ul>
-                    </li>
-                    <li>You can move items freely between windows. Ensure everything is in the correct window before clicking <strong>Post Payment</strong>.</li>
-                    <li>A negative amount in a window indicates a refund; a positive amount indicates a charge.</li>
-                </ol>
-                <h4>For Checked Out Guests:</h4>
-                <ol>
-                    <li>You must enable post-stay privileges.</li>
-                    <li>Click on <strong>Payment Instructions</strong>.</li>
-                    <li>Click <strong>new/edit payment instructions</strong>.</li>
-                    <li>Check the box for "post stay charging".</li>
-                    <li>Click <strong>Save</strong>. You can now manage the folio.</li>
-                </ol>
-
-                <h3>Posting Charges</h3>
-                <ol>
-                    <li>Primarily used for Late Checkouts.</li>
-                    <li>In the billing window, click <strong>"post charge"</strong> at the bottom.</li>
-                    <li>Type in "Late Check Out" and select the correct time/option.</li>
-                    <li>Enter the amount according to the on-shift guide.</li>
-                    <li>Click <strong>Post Charge</strong>.</li>
-                </ol>
-
-                <h3>Adjusting Vs. Comping Charges <span class="tag important">Important</span></h3>
-                <h4>When To Adjust:</h4>
-                <p>Use "Adjust" when a charge should have never existed in the first place.</p>
-                <ul>
-                    <li>Mistaken valet charge.</li>
-                    <li>HH Diamond internet charges.</li>
-                    <li>Incorrect parking fees.</li>
-                </ul>
-                <h4>When To Comp:</h4>
-                <p>Use "Comp" for everything else that is not a mistaken charge.</p>
-                <ul>
-                    <li>Food and beverage (some restaurant charges and tips may not work).</li>
-                    <li>Resort Fees.</li>
-                    <li>Other goodwill gestures.</li>
-                </ul>
-
-                <h3>Transfer Posting (mainly Minibar) <span class="tag very-important">Very Important</span></h3>
-                <ol>
-                    <li>For disputed minibar charges <strong>under $100</strong>.</li>
-                    <li>Go to billing and enable <strong>post stay charging</strong> if the guest is checked out.</li>
-                    <li>Sort by "description" to group minibar charges.</li>
-                    <li>Select the disputed minibar charges. You can move them to a trash window (3, 4, etc.) to confirm the total is under $100.</li>
-                    <li>With the charges highlighted, click the blue ellipses at the top of the billing window.</li>
-                    <li>Click on <strong>Transfer</strong>.</li>
-                    <li>Click the search glass for the room number.</li>
-                    <li>Remove the date, type room # "<strong>9046</strong>", and search.</li>
-                    <li>Select the Minibar room and click <strong>Transfer</strong>.</li>
-                    <li>To issue a refund, ensure Window 1 has the correct negative balance and click <strong>Post Payment</strong>.</li>
-                    <li>Send the updated folio and receipt to the guest.</li>
-                </ol>
-
-                <h3>Minibar Dispute <span class="tag important">Important</span></h3>
-                <ol>
-                    <li>For disputed minibar charges <strong>over $100</strong>.</li>
-                    <li>Go to billing and enable post-stay privileges if needed.</li>
-                    <li>Sort by "description" and select all disputed minibar charges.</li>
-                    <li>Move them to <strong>Window 5</strong>.</li>
-                    <li>Send an email to both <strong>fdcashier</strong> and <strong>minibardisuptes</strong> emails.</li>
-                    <li>In the email, explain the dispute, include the confirmation number, and attach a picture showing their room number and stay dates.</li>
-                    <li>Leave a note on the reservation explaining that you moved the charges to Window 5 and sent the email.</li>
-                    <li>Check your email for updates and send the final folio to the guest when resolved.</li>
-                </ol>
-
-                <h3>AR Disputes</h3>
-                <ol>
-                    <li>For when a guest disputes a charge from a bar, pool, or other outlet.</li>
-                    <li>Enable post-stay privileges and open the billing the window.</li>
-                    <li>Move the disputed charges to <strong>Window 5</strong>.</li>
-                    <li>Go to <strong>Routing Instructions</strong>.</li>
-                    <li>Click <strong>New</strong>. Change the routing option to "folio" and select Window 5.</li>
-                    <li>Click on <strong>Profile</strong>. Change the search type to "View All".</li>
-                    <li>Search for AR Number "<strong>%DISPUTES</strong>".</li>
-                    <li>Select the option that matches the guest's tower and click <strong>Select</strong>.</li>
-                    <li>Save the routing and add notes about your actions.</li>
-                </ol>
-
-                <h3>Routing <span class="tag very-important">Very Important</span></h3>
-                <p>Used to comp items, set up AR disputes, and handle group/wholesale room and tax (RT) payments.</p>
-                <h4>General Set Up</h4>
-                <ol>
-                    <li>Go to <strong>Routing Instructions</strong>.</li>
-                    <li>Click <strong>New</strong> to create one. To view an existing one, click the ellipses and select edit/view.</li>
-                    <li>For comps, select the <strong>Comps</strong> option.</li>
-                    <li>Search for an authorizer to approve the comp (new hires need management permission and their number).</li>
-                    <li>Select the comp window (usually <strong>106</strong> or <strong>107</strong>).</li>
-                    <li>Click <strong>Profile</strong> and enter the appropriate reason for the comp.</li>
-                    <li>Select the charge code(s) on the left to be covered (e.g., "ALL managed Food & Beverage").</li>
-                    <li><strong>MOST IMPORTANTLY:</strong> Enter a maximum amount for the routing at the bottom.</li>
-                    <li>Save and add detailed notes.</li>
-                </ol>
-                <h4>Hilton My Way</h4>
-                <ol>
-                    <li>Same process as above.</li>
-                    <li>Authorizer: <strong>depthhmyway</strong></li>
-                    <li>Window: <strong>108</strong></li>
-                    <li>Profile: Last Name = comps | First Name = ng</li>
-                    <li>Coverage: Select <strong>HHMYWAY</strong> and move it to the right.</li>
-                    <li>Amount: <strong>$30 per night</strong> for Hilton Guests, <strong>$50 per night</strong> for Conrad Guests.</li>
-                </ol>
-
-                <h3>CC Authorizations (Credit Card History) <span class="tag very-important">Most Important</span></h3>
-                <ol>
-                    <li>This is the most critical function for billing questions.</li>
-                    <li>Go to <strong>Payment Instructions</strong> (or from Billing: "I Want To" -> cc authorizations).</li>
-                    <li>Click the blue ellipses on the top right, then click <strong>Credit Card History</strong>.</li>
-                    <li>This screen shows every authorization, payment, refund, and failed transaction.</li>
-                    <div class="note">
-                        <strong>Authorization vs. Charge:</strong> An <strong>authorization</strong> is a hold on funds. We place a large authorization at check-in for the room, tax, and incidental hold. A <strong>settlement/charge</strong> is the final amount we take from that hold. The remaining hold is released.
-                        <br><em>Release times: 24-48 hours for credit cards, 3-10 business days for debit cards, 3-7 for AM
+            </div>
+ 
+        </div>
+    </div>
+ 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuItems = document.querySelectorAll('.menu-item');
+            const contentPages = document.querySelectorAll('.content-page');
+            const backButtons = document.querySelectorAll('.back-button');
+            const mainMenuWrapper = document.querySelector('.main-menu-wrapper');
+            const searchInput = document.getElementById('search-input');
+ 
+            // --- Navigation Logic ---
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const targetId = item.getAttribute('data-target');
+                    const targetPage = document.getElementById(targetId);
+ 
+                    mainMenuWrapper.classList.add('zoom-out');
+ 
+                    setTimeout(() => {
+                        contentPages.forEach(page => page.classList.remove('active'));
+                        if (targetPage) {
+                            targetPage.classList.add('active');
+                            // Scroll to top of the content page
+                            targetPage.scrollTop = 0;
+                        }
+                    }, 400); 
+                });
+            });
+ 
+            backButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const activePage = document.querySelector('.content-page.active');
+                    if (activePage) {
+                        activePage.classList.remove('active');
+                    }
+                    mainMenuWrapper.classList.remove('zoom-out');
+                });
+            });
+ 
+            // --- Search Logic ---
+            const searchContent = () => {
+                const filter = searchInput.value.toUpperCase();
+ 
+                // If search is empty, show everything and return
+                if (filter === "") {
+                    menuItems.forEach(item => item.style.display = "flex");
+                    return;
+                }
+ 
+                menuItems.forEach(item => {
+                    const targetId = item.getAttribute('data-target');
+                    const contentPage = document.getElementById(targetId);
+                    if (contentPage) {
+                        const textValue = contentPage.textContent || contentPage.innerText;
+                        if (textValue.toUpperCase().indexOf(filter) > -1) {
+                            item.style.display = "flex";
+                        } else {
+                            item.style.display = "none";
+                        }
+                    }
+                });
+            };
+ 
+            searchInput.addEventListener('keyup', searchContent);
+        });
+    </script>
+</body>
+</html>
