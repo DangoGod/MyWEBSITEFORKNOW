@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resort World Las Vegas - New Hire Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            border: 2px solid #ff4655;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3') no-repeat center center;
+            background-size: cover;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .character-card {
+            background: rgba(20, 30, 48, 0.85);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #2d4263;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: #ff4655;
+        }
+        
+        .character-header {
+            padding: 20px;
+            background: rgba(45, 66, 99, 0.9);
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #ff4655;
+        }
+        
+        .character-icon {
+            width: 60px;
+            height: 60px;
+            background: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 28px;
+            color: #0f3460;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        
+        .character-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .character-content {
+            padding: 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .character-card.active .character-content {
+            max-height: 2000px;
+        }
+        
+        .character-content h3 {
+            color: #ff7a8a;
+            margin: 20px 0 15px;
+            font-size: 1.5rem;
+            border-left: 4px solid #ff4655;
+            padding-left: 12px;
+        }
+        
+        .character-content ul {
+            padding-left: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .character-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .character-content li:before {
+            content: "•";
+            color: #ffd700;
+            font-weight: bold;
+            position: absolute;
+            left: -20px;
+        }
+        
+        .character-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+        
+        .priority {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        .most-important { background: #ff4655; }
+        .very-important { background: #ff7a8a; }
+        .important { background: #ff9eaa; }
+        .situational { background: #4d8bca; }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            border-top: 1px solid #2d4263;
+        }
+        
+        @media (max-width: 768px) {
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RESORT WORLD ONBOARDING GUIDE</h1>
+            <p class="subtitle">Your ultimate reference for mastering essential systems and procedures at Resort World Las Vegas - organized like Super Smash Bros. Ultimate</p>
+        </header>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff4655;"></div>
+                <span>Most Important</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff7a8a;"></div>
+                <span>Very Important</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff9eaa;"></div>
+                <span>Important</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4d8bca;"></div>
+                <span>Situational</span>
+            </div>
+        </div>
+        
+        <div class="character-grid">
+            <!-- Opera Cloud -->
+            <div class="character-card active">
+                <div class="character-header">
+                    <div class="character-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h2 class="character-title">Opera Cloud</h2>
+                </div>
+                <div class="character-content">
+                    <h3>Bookmarked Opera Cloud Prod Link <span class="priority situational">Situational</span></h3>
+                    <ul>
+                        <li>Copy link from the browser's address bar</li>
+                        <li>Drag it to your bookmarks bar</li>
+                        <li>Right-click to edit the name</li>
+                    </ul>
+                    
+                    <h3>Logging In to Opera Cloud Prod</h3>
+                    <ul>
+                        <li>Use your OKTA credentials</li>
+                        <li>Username format: firstName.lastName@rwlasvegas.com</li>
+                        <li>Click OKTA at the bottom of Opera Cloud login page</li>
+                    </ul>
+                    
+                    <h3>Quoting Rates <span class="priority important">Important</span></h3>
+                    <p>When booking a room, inform guests about these 5 things:</p>
+                    <ul>
+                        <li>Rate for each night</li>
+                        <li>Resort fees (mention separately or include in total)</li>
+                        <li>48-hour cancellation policy</li>
+                        <li>Incidental hold of $150/night (except suites)</li>
+                        <li>Room type booked</li>
+                    </ul>
+                    <p>After quoting, add a note to the reservation. Example: "K1PO Quoted: $79, $79 RF $55, RF $55 | Inc$150/night 48 CXL"</p>
+                    
+                    <h3>Booking a Reservation <span class="priority important">Important</span></h3>
+                    <ul>
+                        <li>Go to <strong>Look To Book</strong> page</li>
+                        <li>Enter dates, number of people, and search</li>
+                        <li>Ask guest about tower and view preferences</li>
+                        <li>Click on rate, scroll down to see rates to quote</li>
+                        <li>After quoting, click Select</li>
+                        <li>Search for guest profile or create new</li>
+                        <li>Collect credit card number and expiration</li>
+                        <li>Click Book Now, collect deposit, add reference "1st Night Deposit"</li>
+                        <li>Go to reservation and add notes</li>
+                    </ul>
+                    
+                    <h3>Profile Management</h3>
+                    <ul>
+                        <li>Use multiple search methods to find guest profiles</li>
+                        <li>Create new profiles when needed - enter all information and save multiple times</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Billing & Payments -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h2 class="character-title">Billing & Payments</h2>
+                </div>
+                <div class="character-content">
+                    <h3>Deposit Codes <span class="priority important">Important</span></h3>
+                    <ul>
+                        <li><strong>WV</strong>: Waive Deposit (comps/B4 Checking)</li>
+                        <li><strong>CP</strong>: Chip & Pin (physical card placeholder)</li>
+                        <li><strong>DD</strong>: Standard payment option</li>
+                        <li><strong>CASH</strong>: Placeholder or for comp rooms</li>
+                    </ul>
+                    
+                    <h3>Collecting Deposits</h3>
+                    <ul>
+                        <li>Go to reservation → Deposit/Cancellation</li>
+                        <li>Click ellipses (⋮) next to deposit amount</li>
+                        <li>Select "Post Deposit"</li>
+                        <li>Add reference "1st Night Deposit"</li>
+                        <li>Process and email receipt if successful</li>
+                    </ul>
+                    
+                    <h3>Billing Windows <span class="priority very-important">Very Important</span></h3>
+                    <ul>
+                        <li>Window 1: Guest payment responsibility</li>
+                        <li>Window 2: Third party/company payments</li>
+                        <li>Window 5: Guest disputes</li>
+                        <li>Windows 101-108: Comp windows</li>
+                        <li>Enable post stay charging for checked out guests</li>
+                    </ul>
+                    
+                    <h3>Credit Card Authorizations <span class="priority most-important">Most Important</span></h3>
+                    <ul>
+                        <li>Go to Payment Instructions → Credit Card History</li>
+                        <li>Shows authorizations, payments, refunds, failures</li>
+                        <li>Authorization holds money, settlement charges card</li>
+                        <li>Processing times: 24-48hrs (credit), 3-10 days (debit)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Reservation Management -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h2 class="character-title">Reservation Management</h2>
+                </div>
+                <div class="character-content">
+                    <h3>Notes & Alerts <span class="priority important">Important</span></h3>
+                    <ul>
+                        <li><strong>Notes</strong>: Detailed descriptions/full stories</li>
+                        <li><strong>Alerts</strong>: Quick notes for next person (MISC, B2B, Pre)</li>
+                        <li><strong>Traces</strong>: Future actions (FDK, HSK, GPD)</li>
+                    </ul>
+                    
+                    <h3>Cancellations & Refunds <span class="priority important">Important</span></h3>
+                    <ul>
+                        <li>Verify cancellable rate codes (DRACK, DBAR, YYGEN1)</li>
+                        <li>I Want To → Cancel Reservation → Select reason</li>
+                        <li>Post penalty if within 48 hours</li>
+                        <li>Refund via Deposit/Cancellation → Reverse payment</li>
+                    </ul>
+                    
+                    <h3>Modifying Reservations</h3>
+                    <ul>
+                        <li><strong>Rates/Room Types</strong>: Use Daily Details</li>
+                        <li><strong>Dates</strong>: Use Edit option on reservation</li>
+                        <li>Never modify third-party (LL codes) without permission</li>
+                    </ul>
+                    
+                    <h3>B2B (Back-to-Back) <span class="priority situational">Situational</span></h3>
+                    <ul>
+                        <li>Add alerts titled "B2B" with confirmation numbers</li>
+                        <li>Add notes describing the situation</li>
+                        <li>Set up FDK trace for 5 AM on second reservation</li>
+                        <li>Add B2B preference</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Guest Services -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <h2 class="character-title">Guest Services</h2>
+                </div>
+                <div class="character-content">
+                    <h3>Luggage Assistance <span class="priority situational">Situational</span></h3>
+                    <ul>
+                        <li>Call Front Services at Ext: 7696</li>
+                        <li>Provide guest ticket number, last name, and room number</li>
+                        <li>For checked out guests: room number, last name, bag count</li>
+                    </ul>
+                    
+                    <h3>Pre-Register for Late Arrivals <span class="priority situational">Situational</span></h3>
+                    <ul>
+                        <li>Set arrival time using Edit reservation</li>
+                        <li>For arrivals after 12 AM: assign room, create note, add "PRE" alert</li>
+                        <li>For arrivals before 11 PM: assign room, create note, add "Late Arrival" preference</li>
+                    </ul>
+                    
+                    <h3>Service Orders <span class="priority very-important">Very Important</span></h3>
+                    <ul>
+                        <li>Create via Service Orders → Yellow plus</li>
+                        <li>Enter room number and select service type</li>
+                        <li>Add remarks if needed</li>
+                        <li>Defer orders using clock icon for future times</li>
+                        <li>Cancel orders by voiding (may require HSKP manager)</li>
+                    </ul>
+                    
+                    <h3>Minibar & Disputes <span class="priority important">Important</span></h3>
+                    <ul>
+                        <li>Under $100: Transfer charges to Minibar room (9046)</li>
+                        <li>Over $100: Move charges to Window 5, email FDCashier and MinibarDisputes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Communication Systems -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h2 class="character-title">Communication Systems</h2>
+                </div>
+                <div class="character-content">
+                    <h3>Cisco Finesse <span class="priority situational">Situational</span></h3>
+                    <ul>
+                        <li>Bookmark URL by dragging to bookmarks bar</li>
+                        <li>Statuses: NR (Not Ready), Break, Lunch</li>
+                        <li>Check queues via Team tab</li>
+                        <li>Transfer calls: Place on hold → Contact recipient → Transfer or Conference</li>
+                    </ul>
+                    
+                    <h3>Red Chat <span class="priority important">Important</span></h3>
+                    <ul>
+                        <li>Access via Cisco Finesse → Red Chat</li>
+                        <li>Set status to Ready in agent settings</li>
+                        <li>Save common responses in "My Responses"</li>
+                        <li>Respond to pending chats by clicking "Pick Up"</li>
+                    </ul>
+                    
+                    <h3>Information Inbox</h3>
+                    <ul>
+                        <li>Access via different browser or incognito mode</li>
+                        <li>Login: information@rwlv.onmicrosoft.com</li>
+                        <li>Set email category to your name and move to completed when done</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Other Systems -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h2 class="character-title">Other Systems</h2>
+                </div>
+                <div class="character-content">
+                    <h3>B4 Check In <span class="priority important">Important</span></h3>
+                    <ul>
+                        <li>Send invoices via Transform Mailer</li>
+                        <li>Select reservation payment → single/multiple</li>
+                        <li>Enter confirmation number and amount</li>
+                        <li>Use reservation payment template</li>
+                    </ul>
+                    
+                    <h3>Grub Hub OTF</h3>
+                    <ul>
+                        <li>Troubleshooting: Ensure room number without dashes</li>
+                        <li>Verify name spelling matches reservation</li>
+                        <li>Select OTF option in Grub Hub</li>
+                        <li>In-room dining available for Conrad Suites and all Crockfords</li>
+                    </ul>
+                    
+                    <h3>Nevotek <span class="priority situational">Situational</span></h3>
+                    <ul>
+                        <li>Set wake-up calls via Guest Database</li>
+                        <li>Delete wake-up calls in same interface</li>
+                        <li>Failed wake-up: Call room multiple times, then security for wellness check</li>
+                    </ul>
+                    
+                    <h3>Synkros</h3>
+                    <ul>
+                        <li>Search patrons: GR Contact → Find tab</li>
+                        <li>Create GR accounts: GR Contact → Enter details → Save</li>
+                        <li>Search vouchers: Select profile → Offers tab</li>
+                        <li>For room offers: Transfer to Resort Marketing (6106)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Resort World Las Vegas New Hire Guide | Version 1.0 | Last Updated: July 2023</p>
+            <p>For additional support, contact your supervisor or training department</p>
+        </div>
+    </div>
+    
+    <script>
+        document.querySelectorAll('.character-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const card = header.parentElement;
+                card.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
