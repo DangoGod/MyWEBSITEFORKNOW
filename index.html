@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resort World Las Vegas - New Hire Guide</title>
+    <title>Resorts World Information - New Hire Guide</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -32,7 +32,7 @@
             margin-bottom: 30px;
             background: rgba(0, 0, 0, 0.7);
             border-radius: 20px;
-            border: 2px solid #ff4655;
+            border: 2px solid #4d8bca;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
@@ -54,8 +54,7 @@
         h1 {
             font-size: 3.5rem;
             margin-bottom: 15px;
-            color: #ffd700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            color: #4d8bca;
             letter-spacing: 2px;
         }
         
@@ -67,27 +66,65 @@
             line-height: 1.6;
         }
         
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 20px;
+            background: #4d8bca;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
         .character-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 40px;
+            transition: all 0.4s ease;
         }
         
         .character-card {
             background: rgba(20, 30, 48, 0.85);
             border-radius: 15px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s ease;
             border: 2px solid #2d4263;
             cursor: pointer;
             position: relative;
+            max-height: 80px;
+            transform: scale(1);
         }
         
         .character-card:hover {
-            transform: translateY(-10px);
+            transform: scale(1.03);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            border-color: #ff4655;
+            border-color: #4d8bca;
+        }
+        
+        .character-card.active {
+            max-height: none;
+            transform: scale(1) !important;
+            border-color: #4d8bca;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            z-index: 10;
+            position: relative;
         }
         
         .character-header {
@@ -95,27 +132,28 @@
             background: rgba(45, 66, 99, 0.9);
             display: flex;
             align-items: center;
-            border-bottom: 2px solid #ff4655;
+            border-bottom: 2px solid #4d8bca;
+            position: relative;
         }
         
         .character-icon {
             width: 60px;
             height: 60px;
-            background: #ffd700;
+            background: #4d8bca;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 20px;
             font-size: 28px;
-            color: #0f3460;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            color: white;
+            box-shadow: 0 0 15px rgba(77, 139, 202, 0.5);
         }
         
         .character-title {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #ffd700;
+            color: #e0e0e0;
         }
         
         .character-content {
@@ -130,10 +168,10 @@
         }
         
         .character-content h3 {
-            color: #ff7a8a;
+            color: #4d8bca;
             margin: 20px 0 15px;
             font-size: 1.5rem;
-            border-left: 4px solid #ff4655;
+            border-left: 4px solid #4d8bca;
             padding-left: 12px;
         }
         
@@ -146,11 +184,12 @@
             margin-bottom: 10px;
             line-height: 1.6;
             position: relative;
+            color: #e0e0e0;
         }
         
         .character-content li:before {
             content: "•";
-            color: #ffd700;
+            color: #4d8bca;
             font-weight: bold;
             position: absolute;
             left: -20px;
@@ -172,10 +211,10 @@
             vertical-align: middle;
         }
         
-        .most-important { background: #ff4655; }
-        .very-important { background: #ff7a8a; }
-        .important { background: #ff9eaa; }
-        .situational { background: #4d8bca; }
+        .most-important { background: #1a5fb4; }
+        .very-important { background: #26a269; }
+        .important { background: #e5a50a; }
+        .situational { background: #9c6f44; }
         
         .legend {
             display: flex;
@@ -225,34 +264,38 @@
     </style>
 </head>
 <body>
+    <button class="back-btn" id="backBtn">
+        <i class="fas fa-arrow-left"></i> Back to Menu
+    </button>
+    
     <div class="container">
         <header>
-            <h1>RESORT WORLD ONBOARDING GUIDE</h1>
-            <p class="subtitle">Your ultimate reference for mastering essential systems and procedures at Resort World Las Vegas - organized like Super Smash Bros. Ultimate</p>
+            <h1>RESORTS WORLD INFORMATION</h1>
+            <p class="subtitle">Your comprehensive reference for mastering essential systems and procedures at Resorts World Las Vegas</p>
         </header>
         
         <div class="legend">
             <div class="legend-item">
-                <div class="legend-color" style="background: #ff4655;"></div>
+                <div class="legend-color" style="background: #1a5fb4;"></div>
                 <span>Most Important</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #ff7a8a;"></div>
+                <div class="legend-color" style="background: #26a269;"></div>
                 <span>Very Important</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #ff9eaa;"></div>
+                <div class="legend-color" style="background: #e5a50a;"></div>
                 <span>Important</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #4d8bca;"></div>
+                <div class="legend-color" style="background: #9c6f44;"></div>
                 <span>Situational</span>
             </div>
         </div>
         
-        <div class="character-grid">
+        <div class="character-grid" id="cardGrid">
             <!-- Opera Cloud -->
-            <div class="character-card active">
+            <div class="character-card">
                 <div class="character-header">
                     <div class="character-icon">
                         <i class="fas fa-cloud"></i>
@@ -510,16 +553,53 @@
         </div>
         
         <div class="footer">
-            <p>Resort World Las Vegas New Hire Guide | Version 1.0 | Last Updated: July 2023</p>
+            <p>Resorts World Las Vegas New Hire Guide | Version 1.0 | Last Updated: July 2023</p>
             <p>For additional support, contact your supervisor or training department</p>
         </div>
     </div>
     
     <script>
-        document.querySelectorAll('.character-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const card = header.parentElement;
-                card.classList.toggle('active');
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.character-card');
+            const backBtn = document.getElementById('backBtn');
+            const cardGrid = document.getElementById('cardGrid');
+            
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // If we're already active, don't do anything
+                    if (this.classList.contains('active')) return;
+                    
+                    // Collapse all cards
+                    cards.forEach(c => {
+                        c.classList.remove('active');
+                        c.style.zIndex = '1';
+                    });
+                    
+                    // Expand clicked card
+                    this.classList.add('active');
+                    this.style.zIndex = '10';
+                    
+                    // Show back button
+                    backBtn.classList.add('visible');
+                    
+                    // Scroll to the card
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            });
+            
+            // Back button functionality
+            backBtn.addEventListener('click', function() {
+                // Collapse all cards
+                cards.forEach(c => {
+                    c.classList.remove('active');
+                    c.style.zIndex = '1';
+                });
+                
+                // Hide back button
+                this.classList.remove('visible');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
     </script>
